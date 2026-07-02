@@ -1,0 +1,408 @@
+/* ===================================================
+   IMPORT FONT
+=================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+*{
+    font-family:'Poppins',sans-serif;
+}
+
+/* ===================================================
+   APP
+=================================================== */
+
+.stApp{
+    background:#0B1120;
+    color:#fff;
+}
+
+/* Remove Streamlit white space */
+
+header{
+    visibility:hidden;
+}
+
+[data-testid="stHeader"]{
+    height:0px;
+}
+
+[data-testid="stToolbar"]{
+    display:none;
+}
+
+.block-container{
+    padding-top:0rem !important;
+    padding-bottom:1rem !important;
+    padding-left:3rem !important;
+    padding-right:3rem !important;
+}
+
+/* ===================================================
+   SIDEBAR
+=================================================== */
+
+section[data-testid="stSidebar"]{
+
+    background:#111827;
+
+    border-right:2px solid #00F5FF;
+
+    box-shadow:
+        0 0 15px #00F5FF,
+        0 0 35px rgba(0,245,255,.35);
+}
+
+.sidebar-title{
+
+    text-align:center;
+
+    font-size:30px;
+
+    font-weight:700;
+
+    color:#00F5FF;
+
+    text-shadow:
+        0 0 8px #00F5FF,
+        0 0 25px #00F5FF;
+
+    margin-bottom:20px;
+}
+
+/* ===================================================
+   TITLE
+=================================================== */
+
+.title{
+
+    text-align:center;
+
+    font-size:54px;
+
+    font-weight:700;
+
+    color:#00F5FF;
+
+    margin-top:0;
+
+    margin-bottom:8px;
+
+    text-shadow:
+        0 0 10px #00F5FF,
+        0 0 25px #00F5FF,
+        0 0 45px #00F5FF;
+}
+
+.subtitle{
+
+    text-align:center;
+
+    color:#B8C1CC;
+
+    font-size:20px;
+
+    margin-bottom:30px;
+}
+
+/* ===================================================
+   CHAT MESSAGE
+=================================================== */
+
+.stChatMessage{
+
+    background:rgba(22,27,34,.85);
+
+    backdrop-filter:blur(12px);
+
+    border-radius:20px;
+
+    border:2px solid rgba(0,245,255,.45);
+
+    box-shadow:
+        0 0 8px rgba(0,245,255,.35);
+
+    padding:18px;
+
+    transition:.35s;
+}
+
+.stChatMessage:hover{
+
+    transform:translateY(-2px);
+
+    border-color:#00F5FF;
+
+    box-shadow:
+        0 0 15px #00F5FF,
+        0 0 30px rgba(0,245,255,.55);
+}
+
+/* Chat text */
+
+[data-testid="stChatMessageContent"]{
+
+    color:#F5F5F5;
+
+    font-size:18px;
+
+    line-height:1.8;
+}
+
+/* ===================================================
+   CHAT INPUT
+=================================================== */
+
+.stChatInput{
+
+    margin-top:25px;
+}
+
+/* Main input container */
+
+.stChatInput > div{
+
+    border:2px solid #00F5FF !important;
+
+    border-radius:22px !important;
+
+    background:#111827 !important;
+
+    box-shadow:
+        0 0 12px rgba(0,245,255,.45);
+
+    transition:.3s;
+}
+
+.stChatInput > div:hover{
+
+    box-shadow:
+        0 0 18px #00F5FF,
+        0 0 40px rgba(0,245,255,.5);
+}
+
+/* Text area */
+
+.stChatInput textarea{
+
+    background:#111827 !important;
+
+    color:white !important;
+
+    min-height:80px !important;
+
+    font-size:18px !important;
+
+    padding:18px !important;
+
+    border:none !important;
+
+    resize:none !important;
+}
+
+.stChatInput textarea:focus{
+
+    box-shadow:none !important;
+}
+
+/* Send button */
+
+.stChatInput button{
+
+    background:#00F5FF !important;
+
+    color:black !important;
+
+    border-radius:50% !important;
+
+    transition:.3s;
+}
+
+.stChatInput button:hover{
+
+    transform:scale(1.1);
+
+    box-shadow:
+        0 0 15px #00F5FF;
+}
+
+/* ===================================================
+   BUTTONS
+=================================================== */
+
+.stButton>button{
+
+    background:#111827;
+
+    color:#00F5FF;
+
+    border:2px solid #00F5FF;
+
+    border-radius:12px;
+
+    width:100%;
+
+    font-weight:600;
+
+    transition:.35s;
+
+    box-shadow:
+        0 0 10px rgba(0,245,255,.35);
+}
+
+.stButton>button:hover{
+
+    background:#00F5FF;
+
+    color:#000;
+
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 0 20px #00F5FF,
+        0 0 40px rgba(0,245,255,.5);
+}
+
+/* ===================================================
+   METRICS
+=================================================== */
+
+[data-testid="metric-container"]{
+
+    background:#111827;
+
+    border-radius:18px;
+
+    border:2px solid rgba(0,245,255,.4);
+
+    padding:15px;
+
+    box-shadow:
+        0 0 10px rgba(0,245,255,.35);
+
+    transition:.3s;
+}
+
+[data-testid="metric-container"]:hover{
+
+    border-color:#00F5FF;
+
+    box-shadow:
+        0 0 20px #00F5FF;
+}
+
+/* ===================================================
+   ALERTS
+=================================================== */
+
+.stAlert{
+
+    background:#111827;
+
+    border-radius:18px;
+
+    border:2px solid rgba(0,245,255,.4);
+
+    box-shadow:
+        0 0 12px rgba(0,245,255,.35);
+}
+
+.stSuccess{
+
+    background:#13311B;
+}
+
+/* ===================================================
+   TYPING
+=================================================== */
+
+.typing{
+
+    color:#00F5FF;
+
+    font-weight:bold;
+
+    animation:blink 1s infinite;
+}
+
+@keyframes blink{
+
+    50%{
+        opacity:.3;
+    }
+}
+
+/* ===================================================
+   FOOTER
+=================================================== */
+
+.footer{
+
+    text-align:center;
+
+    color:#A0AEC0;
+
+    margin-top:30px;
+
+    font-size:15px;
+}
+
+/* ===================================================
+   SCROLLBAR
+=================================================== */
+
+::-webkit-scrollbar{
+
+    width:8px;
+}
+
+::-webkit-scrollbar-track{
+
+    background:#111827;
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#00F5FF;
+
+    border-radius:20px;
+}
+
+/* ===================================================
+   HORIZONTAL LINE
+=================================================== */
+
+hr{
+
+    border:1px solid rgba(0,245,255,.3);
+}
+
+/* ===================================================
+   MOBILE
+=================================================== */
+
+@media(max-width:768px){
+
+.block-container{
+
+    padding-left:1rem !important;
+
+    padding-right:1rem !important;
+}
+
+.title{
+
+    font-size:36px;
+}
+
+.subtitle{
+
+    font-size:16px;
+}
+
+.stChatInput textarea{
+
+    min-height:65px !important;
+}
+
+}
