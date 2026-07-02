@@ -128,7 +128,7 @@ Designed by Thrinaadh Varma
 st.markdown(
 """
 <div class="title">
-Saturn AI Assistant
+Garuda AI
 </div>
 """,
 unsafe_allow_html=True
