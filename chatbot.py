@@ -4,27 +4,26 @@ from typing import Optional
 from typing_extensions import TypedDict
 from langgraph.graph import StateGraph
 
-# ======================================================
-# Configure Gemini Client
-# ======================================================
+# =====================================================
+# Gemini Configuration
+# =====================================================
 
 client = genai.Client(
-    api_key="AQ.Ab8RN6LJiJp-Y5E3x_ROwo05sCpsiAZZlhQIwAHMO_ER0jy1JQ"
+    api_key=st.secrets["GEMINI_API_KEY"]
 )
 
 MODEL_NAME = "gemini-2.5-flash"
 
-# ======================================================
-# Chat History Memory
-# ======================================================
+# =====================================================
+# Session State
+# =====================================================
 
-if "history" not in st.session_state:
-    st.session_state.history = []
+if "messages" not in st.session_state:
+    st.session_state.messages = []
 
-
-# ======================================================
-# Gemini Response Function
-# ======================================================
+# =====================================================
+# Gemini Chat Function
+# =====================================================
 
 def ask_gemini(prompt: str):
 
@@ -32,31 +31,28 @@ def ask_gemini(prompt: str):
 
         conversation = []
 
-        # Last 10 messages for context
-        for msg in st.session_state.history[-10:]:
+        # Use last 10 messages for context
+        for msg in st.session_state.messages[-10:]:
 
             if msg["role"] == "user":
-                conversation.append(
-                    {
-                        "role": "user",
-                        "parts": [{"text": msg["content"]}]
-                    }
-                )
+
+                conversation.append({
+                    "role": "user",
+                    "parts": [{"text": msg["content"]}]
+                })
 
             else:
-                conversation.append(
-                    {
-                        "role": "model",
-                        "parts": [{"text": msg["content"]}]
-                    }
-                )
 
-        conversation.append(
-            {
-                "role": "user",
-                "parts": [{"text": prompt}]
-            }
-        )
+                conversation.append({
+                    "role": "model",
+                    "parts": [{"text": msg["content"]}]
+                })
+
+        # Current Prompt
+        conversation.append({
+            "role": "user",
+            "parts": [{"text": prompt}]
+        })
 
         response = client.models.generate_content(
             model=MODEL_NAME,
@@ -67,12 +63,11 @@ def ask_gemini(prompt: str):
 
     except Exception as e:
 
-        return f"❌ Error : {str(e)}"
+        return f"❌ Error : {e}"
 
-
-# ======================================================
+# =====================================================
 # LangGraph State
-# ======================================================
+# =====================================================
 
 class GraphState(TypedDict):
 
@@ -80,17 +75,15 @@ class GraphState(TypedDict):
     classification: Optional[str]
     response: Optional[str]
 
-
-# ======================================================
+# =====================================================
 # Greeting Detection
-# ======================================================
+# =====================================================
 
 def classify(state):
 
     question = state["question"].lower().strip()
 
     greetings = [
-
         "hi",
         "hello",
         "hey",
@@ -98,29 +91,21 @@ def classify(state):
         "good afternoon",
         "good evening",
         "good night"
-
     ]
 
     if question in greetings:
-
         category = "greeting"
-
     else:
-
         category = "gemini"
 
     return {
-
         **state,
-
         "classification": category
-
     }
 
-
-# ======================================================
+# =====================================================
 # Response Node
-# ======================================================
+# =====================================================
 
 def respond(state):
 
@@ -131,19 +116,20 @@ def respond(state):
         answer = """
 👋 Hello!
 
-I'm your Gemini AI Assistant.
+I'm your Saturn AI Assistant.
 
 I can help you with:
 
 • Programming
-• Machine Learning
+• Python
 • SQL
+• Machine Learning
 • Data Science
 • Interview Preparation
-• General Questions
 • Code Debugging
+• General Knowledge
 
-How can I assist you today?
+How can I help you today?
 """
 
     else:
@@ -151,45 +137,33 @@ How can I assist you today?
         answer = ask_gemini(question)
 
     return {
-
         **state,
-
         "response": answer
-
     }
 
-
-# ======================================================
+# =====================================================
 # Build LangGraph
-# ======================================================
+# =====================================================
 
 builder = StateGraph(GraphState)
 
 builder.add_node("classify", classify)
-
 builder.add_node("respond", respond)
 
 builder.set_entry_point("classify")
-
 builder.add_edge("classify", "respond")
-
 builder.set_finish_point("respond")
 
 app = builder.compile()
 
-
-# ======================================================
+# =====================================================
 # Wrapper Function
-# ======================================================
+# =====================================================
 
 def get_response(prompt):
 
-    result = app.invoke(
-
-        {
-            "question": prompt
-        }
-
-    )
+    result = app.invoke({
+        "question": prompt
+    })
 
     return result["response"]
