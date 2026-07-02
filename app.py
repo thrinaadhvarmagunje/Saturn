@@ -7,7 +7,7 @@ from chatbot import get_response
 # ============================
 
 st.set_page_config(
-    page_title="Saturn AI Assistant",
+    page_title="Garuda AI ",
     page_icon="🤖",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -44,7 +44,7 @@ with st.sidebar:
     st.markdown(
         """
         <div class="sidebar-title">
-        Saturn AI
+        Garuda AI
         </div>
         """,
         unsafe_allow_html=True
