@@ -44,7 +44,7 @@ with st.sidebar:
     st.markdown(
         """
         <div class="sidebar-title">
-        🤖 Saturn AI
+        Saturn AI
         </div>
         """,
         unsafe_allow_html=True
@@ -58,11 +58,11 @@ with st.sidebar:
         """
 Powered by
 
-✅ Gemini 2.5 Flash
+Gemini 2.5 Flash
 
-✅ LangGraph
+LangGraph
 
-✅ Streamlit
+Streamlit
 
 Designed by Thrinaadh Varma
 """
@@ -70,7 +70,7 @@ Designed by Thrinaadh Varma
 
     st.markdown("---")
 
-    if st.button("🧹 Clear Chat"):
+    if st.button(" Clear Chat"):
 
         st.session_state.messages=[]
 
@@ -128,7 +128,7 @@ Designed by Thrinaadh Varma
 st.markdown(
 """
 <div class="title">
-🤖 Saturn AI Assistant
+Saturn AI Assistant
 </div>
 """,
 unsafe_allow_html=True
