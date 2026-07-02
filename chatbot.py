@@ -9,7 +9,7 @@ from langgraph.graph import StateGraph
 # ======================================================
 
 client = genai.Client(
-    api_key=st.secrets["GEMINI_API_KEY"]
+    api_key="AQ.Ab8RN6LJiJp-Y5E3x_ROwo05sCpsiAZZlhQIwAHMO_ER0jy1JQ"
 )
 
 MODEL_NAME = "gemini-2.5-flash"
