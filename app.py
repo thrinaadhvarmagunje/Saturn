@@ -128,7 +128,7 @@ Designed by Thrinaadh Varma
 st.markdown(
 """
 <div class="title">
-🤖 Saturn AI Assistant
+ Saturn AI Assistant
 </div>
 """,
 unsafe_allow_html=True
