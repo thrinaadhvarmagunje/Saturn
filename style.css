@@ -406,3 +406,62 @@ hr{
 }
 
 }
+/* ==========================================
+   FIX WHITE BACKGROUND BEHIND CHAT INPUT
+========================================== */
+
+/* Parent container */
+[data-testid="stBottomBlockContainer"]{
+    background:#0B1120 !important;
+    border:none !important;
+}
+
+/* Bottom area */
+[data-testid="stAppViewBlockContainer"]{
+    background:#0B1120 !important;
+}
+
+/* Entire bottom fixed area */
+.stBottom{
+    background:#0B1120 !important;
+}
+
+/* Chat input wrapper */
+.stChatInput{
+    background:transparent !important;
+    padding:10px 0;
+}
+
+/* Container around the input */
+.stChatInput > div{
+    background:#111827 !important;
+    border:2px solid #00F5FF !important;
+    border-radius:22px !important;
+    box-shadow:0 0 12px rgba(0,245,255,.45);
+}
+
+/* Textarea */
+.stChatInput textarea{
+    background:#111827 !important;
+    color:white !important;
+}
+
+/* Remove any white background from forms */
+[data-testid="stForm"]{
+    background:transparent !important;
+}
+
+/* Remove white blocks */
+.block-container{
+    background:#0B1120 !important;
+}
+
+/* Streamlit bottom container */
+div[data-testid="stDecoration"]{
+    display:none;
+}
+
+/* Footer background */
+footer{
+    background:#0B1120 !important;
+}
