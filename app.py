@@ -2,52 +2,53 @@ import streamlit as st
 import time
 from chatbot import get_response
 
-# ============================
+# =====================================================
 # PAGE CONFIG
-# ============================
+# =====================================================
 
 st.set_page_config(
     page_title="Saturn AI Assistant",
     page_icon="🤖",
     layout="wide",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="expanded",
 )
 
-# ============================
+# =====================================================
 # LOAD CSS
-# ============================
+# =====================================================
 
 def load_css():
-
-    with open("style.css") as f:
-        st.markdown(f"<style>{f.read()}</style>",
-                    unsafe_allow_html=True)
+    with open("style.css", "r", encoding="utf-8") as f:
+        st.markdown(
+            f"<style>{f.read()}</style>",
+            unsafe_allow_html=True,
+        )
 
 load_css()
 
-# ============================
+# =====================================================
 # SESSION STATE
-# ============================
+# =====================================================
 
 if "messages" not in st.session_state:
-    st.session_state.messages=[]
+    st.session_state.messages = []
 
 if "theme" not in st.session_state:
-    st.session_state.theme="Dark"
+    st.session_state.theme = "Dark"
 
-# ============================
+# =====================================================
 # SIDEBAR
-# ============================
+# =====================================================
 
 with st.sidebar:
 
     st.markdown(
         """
         <div class="sidebar-title">
-         Saturn AI
+            🤖 Saturn AI
         </div>
         """,
-        unsafe_allow_html=True
+        unsafe_allow_html=True,
     )
 
     st.markdown("---")
@@ -58,11 +59,11 @@ with st.sidebar:
         """
 Powered by
 
- Gemini 2.5 Flash
+✅ Gemini 2.5 Flash
 
- LangGraph
+✅ LangGraph
 
- Streamlit
+✅ Streamlit
 
 Designed by Thrinaadh Varma
 """
@@ -70,10 +71,8 @@ Designed by Thrinaadh Varma
 
     st.markdown("---")
 
-    if st.button(" Clear Chat"):
-
-        st.session_state.messages=[]
-
+    if st.button("🧹 Clear Chat", use_container_width=True):
+        st.session_state.messages = []
         st.rerun()
 
     st.markdown("---")
@@ -81,174 +80,94 @@ Designed by Thrinaadh Varma
     st.markdown("### ⚙ Settings")
 
     st.selectbox(
-
         "Theme",
-
-        [
-
-            "Dark",
-            "Light"
-
-        ],
-
-        key="theme"
-
+        ["Dark", "Light"],
+        key="theme",
     )
 
     st.markdown("---")
 
-    st.markdown("### 📊 Statistics")
+    total = len(st.session_state.messages)
 
-    total=len(st.session_state.messages)
-
-    users=len(
-        [i for i in st.session_state.messages
-         if i["role"]=="user"]
+    users = len(
+        [
+            m
+            for m in st.session_state.messages
+            if m["role"] == "user"
+        ]
     )
 
-    bots=len(
-        [i for i in st.session_state.messages
-         if i["role"]=="assistant"]
+    bots = len(
+        [
+            m
+            for m in st.session_state.messages
+            if m["role"] == "assistant"
+        ]
     )
 
-    st.metric("Messages",total)
-
-    st.metric("Questions",users)
-
-    st.metric("Responses",bots)
+    st.metric("Messages", total)
+    st.metric("Questions", users)
+    st.metric("Responses", bots)
 
     st.markdown("---")
 
     st.success("🟢 Online")
-
-# ============================
-# HEADER
-# ============================
-
-st.markdown(
-"""
-<div class="title">
- Saturn AI Assistant
-</div>
-""",
-unsafe_allow_html=True
-)
+    # =====================================================
+# HERO SECTION
+# =====================================================
 
 st.markdown(
-"""
-<div class="subtitle">
-Powered by Gemini 2.5 Flash • LangGraph • Streamlit
-</div>
-""",
-unsafe_allow_html=True
+    """
+    <div class="hero-card">
+
+        <div class="hero-title">
+            🤖 Saturn AI Assistant
+        </div>
+
+        <div class="hero-subtitle">
+            Powered by Gemini 2.5 Flash • LangGraph • Streamlit
+        </div>
+
+    </div>
+    """,
+    unsafe_allow_html=True,
 )
 
-st.write("")
+st.markdown("<br>", unsafe_allow_html=True)
 
-# ============================
+# =====================================================
 # CHAT HISTORY
-# ============================
+# =====================================================
 
-for message in st.session_state.messages:
+chat_container = st.container()
 
-    avatar="🤖"
+with chat_container:
 
-    if message["role"]=="user":
-        avatar="👨‍💻"
+    for message in st.session_state.messages:
 
-    with st.chat_message(
-        message["role"],
-        avatar=avatar
-    ):
+        if message["role"] == "user":
 
-        st.markdown(message["content"])
+            with st.chat_message(
+                "user",
+                avatar="👨‍💻"
+            ):
 
-# ============================
-# USER INPUT
-# ============================
+                st.markdown(message["content"])
 
-prompt=st.chat_input(
-    "Ask me anything..."
-)
+        else:
 
-if prompt:
+            with st.chat_message(
+                "assistant",
+                avatar="🤖"
+            ):
 
-    st.session_state.messages.append(
-
-        {
-
-            "role":"user",
-
-            "content":prompt
-
-        }
-
-    )
-
-    with st.chat_message(
-
-        "user",
-
-        avatar="👨‍💻"
-
-    ):
-
-        st.markdown(prompt)
-
-    with st.chat_message(
-
-        "assistant",
-
-        avatar="🤖"
-
-    ):
-
-        typing=st.empty()
-
-        response_placeholder=st.empty()
-
-        typing.markdown(
-            """
-<div class='typing'>
-Thinking...
-</div>
-""",
-            unsafe_allow_html=True
-        )
-
-        response=get_response(prompt)
-
-        typing.empty()
-
-        streamed=""
-
-        for word in response.split():
-
-            streamed+=word+" "
-
-            response_placeholder.markdown(
-                streamed+"▌"
-            )
-
-            time.sleep(0.03)
-
-        response_placeholder.markdown(streamed)
-
-        st.session_state.messages.append(
-
-            {
-
-                "role":"assistant",
-
-                "content":response
-
-            }
-
-        )
+                st.markdown(message["content"])
 st.markdown(
 """
-<div class='footer'>
-Made with ❤️ by Thrinaadh Varma using Gemini 2.5 Flash
+<div class="footer">
+
+Made with ❤️ by <b>Thrinaadh Varma</b>
+
 </div>
 """,
 unsafe_allow_html=True
